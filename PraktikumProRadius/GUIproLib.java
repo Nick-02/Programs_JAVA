@@ -1,26 +1,26 @@
 package GUIproLib;
 
-        import java.io.File;
-        import java.nio.CharBuffer;
-        import java.util.*;
-        import javax.swing.*;
-        import java.awt.*;
-        import java.awt.event.*;
+import java.io.File;
+import java.nio.CharBuffer;
+import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-        import java.awt.event.ActionEvent;
-        import java.awt.event.ActionListener;
-        import java.awt.image.BufferedImage;
-        import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
-        import javax.imageio.ImageIO;
-        import javax.swing.ImageIcon;
-        import java.awt.event.MouseAdapter;
-        import java.awt.event.MouseEvent;
-        import java.io.IOException;
-        import java.awt.Dimension;
-        import java.awt.Graphics;
-        import java.awt.Graphics2D;
-        import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.List;
 
 public class GUIproLib extends  Frame implements
         WindowListener {
@@ -82,7 +82,7 @@ public class GUIproLib extends  Frame implements
         double[] radius = new double[12]; //таблиця для радіусів
         File file = new File("radius.txt");
         BufferedReader reader = null;
-      int p=0;
+        int p=0;
         try {
             reader = new BufferedReader(new FileReader(file));
             String text = null;
@@ -124,6 +124,7 @@ public class GUIproLib extends  Frame implements
         ms="radius     dlina      ploschad";
         g.drawString(ms,100+60,140+(p+3)*20);
         int k=0;
+        String txt="";
         for (int i = 0; i <p; i++) {
             if(dlina[i]>7 && dlina[i]<10)
             {
@@ -136,6 +137,14 @@ public class GUIproLib extends  Frame implements
                 g.setColor(new Color(255, 255, 255));
                 g.fillRect(100+200+42,480+k*20-16,400,40);
                 g.setColor(new Color(0, 0, 0));
+
+                        txt += String.valueOf(radius[i]);
+                        txt += "\t\t";
+                        txt += String.valueOf(dlina[i]);
+                        txt += "\t\t";
+                        txt += String.valueOf(ploscha[i]);
+                        txt += "\n";
+
                 k++;
             }
         }
@@ -146,19 +155,7 @@ public class GUIproLib extends  Frame implements
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(wfile));
-            String txt="";
-            for (int i = 0; i <10; i++) {
-                if(dlina[i]>7 && dlina[i]<10) {
-                    txt += String.valueOf(radius[i]);
-                    txt += "\t\t";
-                    txt += String.valueOf(dlina[i]);
-                    txt += "\t\t";
-                    txt += String.valueOf(ploscha[i]);
-                    txt += "\n\t";
-                    writer.write(txt);
-                    writer.flush();
-                }
-            }
+            writer.write(txt);
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -170,7 +167,65 @@ public class GUIproLib extends  Frame implements
             }
         }
 
-
+/*
+        ms="Результати перевірки:";
+        g.drawString(ms,420,105);
+        String[] spisok = new String[15];
+        int[] marks = new int[15];
+        file = new File("class.txt");
+        reader = null;
+        p=0;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String text = null;
+            while ((text = reader.readLine()) != null) {
+                spisok[p]=text;
+                p++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();//закрити файл
+                }
+            } catch (IOException e) {
+            }
+        }
+        // marks
+        file = new File("marks.txt");
+        reader = null;
+        p=0;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String text = null;
+            while ((text = reader.readLine()) != null) {
+                marks[p]= Integer.parseInt(text);
+                p++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();//закрити файл
+                }
+            } catch (IOException e) {
+            }
+        }
+        for (int i = 0; i <p; i++) {
+            txt="";txt+=(i+1)+")";
+            g.drawString(txt,405,140+20*i);
+            txt="";txt+=spisok[i];
+            g.drawString(txt,405+40,140+20*i);
+            txt="";txt+=marks[i];
+            g.drawString(txt,405+180,140+20*i);
+        }
+*/
 
     }
 
@@ -186,7 +241,7 @@ public class GUIproLib extends  Frame implements
         addWindowListener(this);
         setLayout(null);
         setLocation(20,50);
-        setSize(800,700);
+        setSize(750,600);
         this.setResizable(false);
 
         show();
